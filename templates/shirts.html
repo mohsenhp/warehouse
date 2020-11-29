@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Warehouse - Shirts</title>
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script type = "text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script type = "text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type = "text/javascript"  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="bg-secondary">
+  <div class="fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/"><b>Warehouse</b></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/jackets">Jackets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/shirts">Shirts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/accessories">Accessories</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card bg-secondary">
+          <div class="card-body bg-dark">
+            {% for entry in data %}
+            <div class="card  mb-3">
+              <div class="card-header">
+                <p><strong>Name: </strong>{{entry[1]["name"]}}</p>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <p><strong>Type: </strong>{{entry[1]["type"]}}</p>
+                    <p><strong>Manufacturer: </strong>{{entry[1]["manufacturer"]}}</p>
+                    <p><strong>Price: </strong>{{entry[1]["price"]}}</p>
+                  </div>
+                  <div class="col">
+                    <p><strong>Color: </strong>{{entry[1]["color"]}}</p>
+                    <p><strong>ID: </strong>{{entry[0]}}</p>
+                    <p><strong>Availability: </strong>{{entry[1]["availability"]}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var index = 0;
+  
+    $(window).scroll(() => {
+      var current_y = $(window).scrollTop();
+      var window_height = $(window).height();
+      var document_height = $(document).height();
+      
+      if (current_y + window_height == document_height) {
+        downloadContent(index, limit);
+        index += 1
+      }
+    });
+    
+    function downloadContent(index, limit) {
+      $.get('/shirts?index=' + index, (data) => {
+        for (var index = 0; index < data.length; index++) {
+          //To do: new data should be add here!
+          var page = ``
+
+          $('#properties').append(page)
+        }
+      });
+    }
+    
+  </script>
+</body>
+</html>
